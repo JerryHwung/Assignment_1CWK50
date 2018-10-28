@@ -137,6 +137,78 @@ public class Controller {
 				System.out.println("Records successfully created");
 			} else System.out.println("Insert failed");
 			break;
+		
+		case 4:
+			System.out.println("Please enter vehicle ID > ");
+			int tempUpID;
+			tempUpID = input.nextInt();
+			System.out.println("Please enter new vehicle details..");
+			String upMake, upModel, upLicenseNumber, upColour, upTransmission, upFuelType, upBodyStyle, upCondition, upNotes;
+			int upID, upYear, upPrice, upDoors, upMileage, upEngineSize;
+			System.out.println("Enter vehicle ID: ");
+			upID = input.nextInt();
+			//Placing an input.nextLine(); after each .nextInt() is required if the next input is nextLine();
+			//without placing a nextLine(); will make it ignores the next .nextLine()
+			//Reference: https://stackoverflow.com/questions/5032356/using-scanner-nextline
+			input.nextLine();
+			System.out.println("Enter vehicle make: ");
+			upMake = input.nextLine();
+			System.out.println("Enter vehicle model: ");
+			upModel = input.nextLine();
+			System.out.println("Enter vehicle year: ");
+			upYear = input.nextInt();
+			System.out.println("Enter vehicle price: ");
+			upPrice = input.nextInt();
+			input.nextLine();
+			System.out.println("Enter vehicle license number: ");
+			upLicenseNumber = input.nextLine();
+			System.out.println("Enter vehicle colour: ");
+			upColour = input.nextLine();
+			System.out.println("Enter vehicle number of doors: ");
+			upDoors = input.nextInt();
+			input.nextLine();
+			System.out.println("Enter vehicle transmission type (manual/automatic): ");
+			upTransmission = input.nextLine();
+			System.out.println("Enter vehicle mileage: ");
+			upMileage = input.nextInt();
+			input.nextLine();
+			System.out.println("Enter vehicle fuel type (petrol, diesel, hybrid, electric): ");
+			upFuelType = input.nextLine();
+			System.out.println("Enter vehicle engine size (cc): ");
+			upEngineSize = input.nextInt();
+			input.nextLine();
+			System.out.println("Enter vehicle body style (hatchback, estate, SUV, MVP coupe): ");
+			upBodyStyle = input.nextLine();
+			System.out.println("Enter vehicle condition(e.g. like new, good, fair): ");
+			upCondition = input.nextLine();
+			System.out.println("Enter vehicle notes (special features such as sat nav): ");
+			upNotes = input.nextLine();
+			System.out.println("Updating record...");
+			Vehicle updateV = new Vehicle(upID, upMake, upModel, upYear,  upPrice, upLicenseNumber, upColour, upDoors, upTransmission, upMileage, upFuelType, upEngineSize, upBodyStyle, upCondition, upNotes);
+			Boolean updated = dao.updateVehicle(updateV, tempUpID);
+			System.out.println("---------------------");
+			if (updated = true){
+				System.out.println("Records successfully updated");
+			} else System.out.println("Update failed");
+			break;
+			
+		case 5:
+			int tempDelID;
+			System.out.println("Please enter vehicle ID > ");
+			tempDelID = input.nextInt();
+			Boolean deleted = dao.deleteVehicle(tempDelID);
+			System.out.println("---------------------");
+			if (deleted = true){
+				System.out.println("Delete operation successfully done");
+			}
+			else System.out.println("Delete operation failed");
+			break;
+			
+		case 6:
+			System.out.println("---------------------");
+			System.out.println("Thank you for using this system, see you!");
+			break;
+			
 		default:
 			System.out.println("Please enter number between 1 - 6");
 			
