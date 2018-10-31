@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,16 +69,19 @@ public class VehicleDAO {
 
 	public Vehicle getVehicle(int vehicleID)throws SQLException{
 		Connection dbConnection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement= null;
 		ResultSet result = null;
 		Vehicle temp = null;
 		
-		String query = "SELECT * FROM vehicles WHERE vehicle_id =" + vehicleID+";";
+		String query = "SELECT * FROM vehicles WHERE vehicle_id = ?";
 		try{
 			dbConnection = getDBConnection();
-			statement = dbConnection.createStatement();
+			preparedStatement = dbConnection.prepareStatement(query);
+			preparedStatement.setInt(1,vehicleID);
 			System.out.println("DBQuery = "+query);
-			result = statement.executeQuery(query);
+			result = preparedStatement.executeQuery();
+			//Just run executeQuery() and not executeQuery(String) when doing a SELECT query with params.
+			//Run with executeQuery(String) will gives error
 				while(result.next()){
 					int vehicle_id = result.getInt("vehicle_id");
 					String make = result.getString("make");
@@ -99,71 +103,95 @@ public class VehicleDAO {
 				}
 		} finally{
 			if (result != null){result.close();}
-			if (statement != null){statement.close();}
+			if (preparedStatement != null){preparedStatement.close();}
 			if (dbConnection != null){dbConnection.close();}
 		}
 		return temp;
 	}
 	public Boolean deleteVehicle(int vehicle_id) throws SQLException{
 		Connection dbConnection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement= null;
 		
-		String query = "DELETE FROM vehicles WHERE vehicle_id = " +vehicle_id+";";
+		String query = "DELETE FROM vehicles WHERE vehicle_id = ?";
 		try{
 			dbConnection = getDBConnection();
-			statement = dbConnection.createStatement();
+			preparedStatement = dbConnection.prepareStatement(query);
+			preparedStatement.setInt(1,vehicle_id);
 			System.out.println("DBQuery = "+query);
-			statement.executeUpdate(query);
+			preparedStatement.executeUpdate();
 		} catch(Exception e){return false;}
 		
 		finally{
-			if (statement != null){statement.close();}
+			if (preparedStatement != null){preparedStatement.close();}
 			if (dbConnection != null){dbConnection.close();}
 		}
 		return true;
 	}
 	public Boolean insertVehicle(Vehicle v) throws SQLException{
 		Connection dbConnection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement= null;
 		
 		String query = "INSERT INTO vehicles (vehicle_id, make, model, year, price, license_number, colour, number_doors, transmission, mileage, fuel_type, engine_size, body_style, condition, Notes) "+
-						"VALUES (" +v.getVehicle_id()+", '"+v.getMake()+"', '"+v.getModel()+
-						"', "+v.getYear()+", "+v.getPrice()+", '"+v.getLicense_number()+
-						"', '"+v.getColour()+"', "+v.getNumber_doors()+", '"+v.getTransmission()+
-						"', "+v.getMileage()+", '"+v.getFuel_type()+"', "+v.getEngine_size()+
-						", '"+v.getBody_style()+"', '"+v.getCondition()+"', '"+v.getNotes()+"');";
+						"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try{
 			dbConnection = getDBConnection();
-			statement = dbConnection.createStatement();
+			preparedStatement = dbConnection.prepareStatement(query);
+			preparedStatement.setInt(1,v.getVehicle_id());
+			preparedStatement.setString(2,v.getMake());
+			preparedStatement.setString(3,v.getModel());
+			preparedStatement.setInt(4,v.getYear());
+			preparedStatement.setInt(5,v.getPrice());
+			preparedStatement.setString(6,v.getLicense_number());
+			preparedStatement.setString(7,v.getColour());
+			preparedStatement.setInt(8,v.getNumber_doors());
+			preparedStatement.setString(9,v.getTransmission());
+			preparedStatement.setInt(10,v.getMileage());
+			preparedStatement.setString(11,v.getFuel_type());
+			preparedStatement.setInt(12,v.getEngine_size());
+			preparedStatement.setString(13,v.getBody_style());
+			preparedStatement.setString(14,v.getCondition());
+			preparedStatement.setString(15,v.getNotes());
 			System.out.println("DBQuery = "+query);
-			statement.executeUpdate(query);
+			preparedStatement.executeUpdate();
 		} catch(Exception e){return false;}
 		
 		finally{
-			if (statement != null){statement.close();}
+			if (preparedStatement != null){preparedStatement.close();}
 			if (dbConnection != null){dbConnection.close();}
 		}
 		return true;
 	}
 	public Boolean updateVehicle(Vehicle v, int vehicle_id) throws SQLException{
 		Connection dbConnection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		
-		String query = "UPDATE vehicles SET vehicle_id="+v.getVehicle_id()+", make='"+v.getMake()+"', model='"+v.getModel()+
-				"', year="+v.getYear()+", price="+v.getPrice()+", license_number='"+v.getLicense_number()+
-				"', colour='"+v.getColour()+"', number_doors="+v.getNumber_doors()+", transmission='"+v.getTransmission()+
-				"', mileage="+v.getMileage()+", fuel_type='"+v.getFuel_type()+"', engine_size="+v.getEngine_size()+
-				", body_style='"+v.getBody_style()+"', condition='"+v.getCondition()+"', Notes='"+v.getNotes()+
-				"' WHERE vehicle_id="+vehicle_id+";";
+		String query = "UPDATE vehicles SET vehicle_id=?, make=?, model=?, year=?, price=?, license_number=?, colour=?, number_doors=?,"+
+						"transmission=?, mileage=?, fuel_type=?, engine_size=?, body_style=?, condition=?, Notes=? WHERE vehicle_id=?";
 		try{
 			dbConnection = getDBConnection();
-			statement = dbConnection.createStatement();
+			preparedStatement = dbConnection.prepareStatement(query);
+			preparedStatement.setInt(1,v.getVehicle_id());
+			preparedStatement.setString(2,v.getMake());
+			preparedStatement.setString(3,v.getModel());
+			preparedStatement.setInt(4,v.getYear());
+			preparedStatement.setInt(5,v.getPrice());
+			preparedStatement.setString(6,v.getLicense_number());
+			preparedStatement.setString(7,v.getColour());
+			preparedStatement.setInt(8,v.getNumber_doors());
+			preparedStatement.setString(9,v.getTransmission());
+			preparedStatement.setInt(10,v.getMileage());
+			preparedStatement.setString(11,v.getFuel_type());
+			preparedStatement.setInt(12,v.getEngine_size());
+			preparedStatement.setString(13,v.getBody_style());
+			preparedStatement.setString(14,v.getCondition());
+			preparedStatement.setString(15,v.getNotes());
+			preparedStatement.setInt(16,vehicle_id);
 			System.out.println("DBQuery = "+query);
-			statement.executeUpdate(query);
+			preparedStatement.executeUpdate();
 		} catch(Exception e){return false;}
 		
 		finally{
-			if (statement != null){statement.close();}
+			if (preparedStatement != null){preparedStatement.close();}
 			if (dbConnection != null){dbConnection.close();}
 		}
 		return true;
