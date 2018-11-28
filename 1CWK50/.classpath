@@ -25,6 +25,5 @@
 	<classpathentry kind="lib" path="libs/org.eclipse.jetty.webapp_9.4.5.v20170502.jar"/>
 	<classpathentry kind="lib" path="libs/org.eclipse.jetty.xml_9.4.5.v20170502.jar"/>
 	<classpathentry kind="lib" path="libs/sqlite-jdbc-3.20.0.jar"/>
-	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

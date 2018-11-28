@@ -17,7 +17,7 @@ public class Controller {
 		Server server = new Server(8080);//creating the server on port 8080
 		WebAppContext ctx = new WebAppContext();//creating the WebAppContext for the created content
 		ctx.setResourceBase("webapp");//where web contents stored
-		ctx.setContextPath("/home");//base url(landing page)
+		ctx.setContextPath("/index");//base url(landing page)
 		Configure(server);
 		ctx.addServlet("servlets.ServletHome", "/home");
 		ctx.addServlet("servlets.ServletLogin", "/login");
