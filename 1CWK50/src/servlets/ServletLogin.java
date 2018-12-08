@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +26,16 @@ private static final long serialVersionUID = 1L;
 		
 		if(username.equals("admin") && password.equals("admin")) {
 			HttpSession session = req.getSession();
-			session.setAttribute("loggedin",true);
-			resp.sendRedirect("./home");
+			//set up a session
+			session.setAttribute("user","admin");
+			//set the session to expire in 30 mins
+			session.setMaxInactiveInterval(30*60);
+			//set up a cookie
+			Cookie uname = new Cookie("user",username);
+			resp.addCookie(uname);
+			//added a encoded URL string because user who disabled cookies cannot receive the JSESSIONID cookie from client
+			String encodedURL = resp.encodeRedirectURL("./home");
+			resp.sendRedirect(encodedURL);
 		}
 		else {
 			RequestDispatcher view = req.getRequestDispatcher("jsp/login.jsp");
