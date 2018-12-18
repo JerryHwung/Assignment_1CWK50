@@ -15,6 +15,11 @@
 	<c:if test="${sessionScope.user == 'admin'}">
 	
 	<h1>Hi ${user}, welcome to vehicle database!</h1><br>
+	<form method="POST" action="./logout">
+	<input type="submit" value="Logout">
+	</form>
+	<br>
+	<b><a href = "./addVehicle">Create</a></b><br>
 	<table>
 		<tr> <th>Vehicle ID</th> <th>Make</th> <th>Model</th> <th>Year</th> <th>Price</th> 
 		<th>License Number</th> <th>Colour</th> <th>Number of Doors</th> <th>Transmission</th> 
