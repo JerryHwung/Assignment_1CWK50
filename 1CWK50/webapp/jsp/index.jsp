@@ -14,8 +14,8 @@
 	<b>${message}</b><br>
 	${notification}<br>
 	<c:remove var="notification" scope="session"/>
-	<c:if test="${sessionScope.user == 'admin'}">
-	
+	<c:choose>
+	<c:when test="${sessionScope.user == 'admin'}">
 	<h1>Hi ${user}, welcome to vehicle database!</h1><br>
 	<form method="POST" action="./logout">
 	<input type="submit" value="Logout">
@@ -36,10 +36,14 @@
 	</tr>
 	</c:forEach>
 	</table>
-	</c:if>
-	<c:if test="${sessionScope.user == null}">
+	</c:when>
+	<c:when test="${sessionScope.user == null}">
 	<h1>Please <a href = "./login">Log in</a> to view tables.</h1>
-	</c:if>
+	</c:when>
+	<c:otherwise>	
+	<h1>Only admin able to manipulate table.</h1>
+	</c:otherwise>
+	</c:choose>
 <br>
 </body>
 </html>
