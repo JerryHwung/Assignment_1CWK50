@@ -19,6 +19,8 @@ public class Controller {
 		ctx.addServlet("servlets.ServletLogin", "/login");
 		ctx.addServlet("servlets.ServletLogout", "/logout");
 		ctx.addServlet("servlets.ServletAddVehicle", "/addVehicle");
+		ctx.addServlet("servlets.ServletUpdateVehicle", "/update");
+		ctx.addServlet("servlets.ServletDeleteVehicle", "/delete");
 		server.setHandler(ctx);
 		server.start();
 		server.join();

@@ -10,7 +10,8 @@
 </head>
 <body>
 <b>${message}</b><br>
-<b>${failLogin}</b><br>
+<b>${failLogin} ${notification}</b><br>
+<c:remove var="notification" scope="session"/>
 <c:if test="${sessionScope.user == null}">
 <form method="POST" action="./login">
 Username: <input type="text" name="username" required><br>

@@ -12,13 +12,14 @@
 </head>
 <body>
 	<b>${message}</b><br>
+	${notification}<br>
+	<c:remove var="notification" scope="session"/>
 	<c:if test="${sessionScope.user == 'admin'}">
 	
 	<h1>Hi ${user}, welcome to vehicle database!</h1><br>
 	<form method="POST" action="./logout">
 	<input type="submit" value="Logout">
 	</form>
-	<br>
 	<b><a href = "./addVehicle">Create</a></b><br>
 	<table>
 		<tr> <th>Vehicle ID</th> <th>Make</th> <th>Model</th> <th>Year</th> <th>Price</th> 
@@ -28,7 +29,11 @@
 	<tr><td>${v.getVehicle_id()}</td> <td>${v.getMake()}</td> <td>${v.getModel()}</td> <td>${v.getYear()}</td> <td>${v.getPrice()}</td> 
 		<td>${v.getLicense_number()}</td> <td>${v.getColour()}</td> <td>${v.getNumber_doors()}</td> <td>${v.getTransmission()}</td> 
 		<td>${v.getMileage()}</td> <td>${v.getFuel_type()}</td> <td>${v.getEngine_size()}</td> <td>${v.getBody_style()}</td> 
-		<td>${v.getCondition()}</td> <td>${v.getNotes()}</td></tr>
+		<td>${v.getCondition()}</td> <td>${v.getNotes()}</td> 
+		<td><a href="./update?id=${v.getVehicle_id()}">Edit</a>
+		<form method="POST" action="./delete?id=${v.getVehicle_id()}">
+		<input type="submit" value="Delete"></form> </td>
+	</tr>
 	</c:forEach>
 	</table>
 	</c:if>
