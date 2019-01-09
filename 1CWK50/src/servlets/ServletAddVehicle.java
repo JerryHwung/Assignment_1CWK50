@@ -1,3 +1,7 @@
+/**
+ * This servlet add a new vehicle details
+ * @author Hong Jin Hwung_17004464
+ */
 package servlets;
 
 import java.io.IOException;
@@ -13,20 +17,25 @@ import controller.VehicleDAO;
 import models.Vehicle;
 
 public class ServletAddVehicle extends HttpServlet{
-
+	// set up a universal version identifier
 	private static final long serialVersionUID = 1L;
 	@Override
+	// get request
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
+		// set up the destination for the request
 		RequestDispatcher view = req.getRequestDispatcher("jsp/add-vehicle.jsp");
-		req.setAttribute("message", "This page link to SevletAddVehicle");
+		req.setAttribute("message", "Please insert details");
+		// forward request
 		view.forward(req, resp);
 	}
 	@Override
+	// post request
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		VehicleDAO dao = new VehicleDAO();
+		// declare variables
 		String vMake, vModel, vLicenseNumber, vColour, vTransmission, vFuelType, vBodyStyle, vCondition, vNotes;
 		int vID, vYear, vPrice, vDoors, vMileage, vEngineSize;
-		
+		// extract values from the submitted form
 		vID = Integer.parseInt(req.getParameter("id"));
 		vMake = (String) req.getParameter("make");
 		vModel = (String) req.getParameter("model");
@@ -45,6 +54,7 @@ public class ServletAddVehicle extends HttpServlet{
 		Vehicle newV = new Vehicle(vID, vMake, vModel, vYear,  vPrice, vLicenseNumber, vColour, vDoors, vTransmission, vMileage, vFuelType, vEngineSize, vBodyStyle, vCondition, vNotes);
 		
 		try {
+			// execute method to insert a new vehicle
 			dao.insertVehicle(newV);
 			RequestDispatcher view = req.getRequestDispatcher("jsp/add-vehicle.jsp");
 			req.setAttribute("message", "Record successfully created");

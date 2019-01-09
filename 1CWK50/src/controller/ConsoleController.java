@@ -1,3 +1,7 @@
+/**
+ * This is the console controller for testing VehicleDAO CRUD methods
+ * @author Hong Jin Hwung_17004464
+ */
 package controller;
 
 import java.sql.SQLException;
@@ -9,9 +13,20 @@ import models.Vehicle;
 public class ConsoleController {
 
 	public static void main(String[] args) throws SQLException {
+		/**
+		 * Menu displayed for user to choose which CRUD method to execute
+		 * The menu will print out again once the chosen method completed
+		 * By selecting exit, the menu will stop the loop
+		 */
 		VehicleDAO dao = new VehicleDAO();
+		/**
+		 * @param choice = the option that user chose
+		 */
 		int choice=0;
 		while(choice!=6) {
+		/**
+		 * @param input = a scanner
+		 */
 		Scanner input = new Scanner(System.in);
 		//Console menu
 		System.out.println("-------------------------");
@@ -26,6 +41,7 @@ public class ConsoleController {
 		System.out.println("Enter choice > ");
 		choice = input.nextInt();
 		switch(choice){
+		// get all vehicles' details
 		case 1: 
 			ArrayList<Vehicle> allVehicles = null;
 			allVehicles = dao.getAllVehicle();
@@ -35,19 +51,40 @@ public class ConsoleController {
 				System.out.println(v);
 			}
 			break;
-		
+		// use a Vehicle ID to retrieve a specific vehicle's details
 		case 2:
 			System.out.println("Please enter vehicle ID > ");
+			/**
+			 * @param tempGetID = a temporary place to store vehicle ID for this case
+			 */
 			int tempGetID;
 			tempGetID = input.nextInt();
+			// execute method to retrieve the vehicle's details
 			Vehicle tempV = dao.getVehicle(tempGetID);
 			System.out.println("---------------------");
 			System.out.println("Details of selected vehicle: ");
 			System.out.println(tempV);
 			break;
-		
+		// insert a new vehicle
 		case 3:
 			System.out.println("Please enter new vehicle details..");
+			/**
+			 * @param vMake = Vehicle's make
+			 * @param vModel = Vehicle's model
+			 * @param vLicenseNumber = Vehicle's License Number
+			 * @param vColour = Vehicle's colour
+			 * @param vTransmission = Vehicle's transmission
+			 * @param vFuelType = Vehicle's fuel type
+			 * @param vBodyStyle = Vehicle's Body Style
+			 * @param vCondition = Vehicle's condition
+			 * @param vNotes = Additional notes about the vehicle
+			 * @param vID = vehicle's ID 
+			 * @param vYear = vehicle's age
+			 * @param vPrice = vehicle's price
+			 * @param vDoors = vehicle's number of doors
+			 * @param vMileage = Vehicle's milegawe
+			 * @param vEngineStyle = Vehicles engine style 
+			 */
 			String vMake, vModel, vLicenseNumber, vColour, vTransmission, vFuelType, vBodyStyle, vCondition, vNotes;
 			int vID, vYear, vPrice, vDoors, vMileage, vEngineSize;
 			System.out.println("Enter vehicle ID: ");
@@ -96,7 +133,7 @@ public class ConsoleController {
 				System.out.println("Records successfully created");
 			} else System.out.println("Insert failed");
 			break;
-		
+		// Update a vehicle's details
 		case 4:
 			System.out.println("Please enter vehicle ID > ");
 			int tempUpID;
@@ -143,6 +180,9 @@ public class ConsoleController {
 			System.out.println("Enter vehicle notes (special features such as sat nav): ");
 			upNotes = input.nextLine();
 			System.out.println("Updating record...");
+			/**
+			 * @param updateV = an updated vehicle object
+			 */
 			Vehicle updateV = new Vehicle(upID, upMake, upModel, upYear,  upPrice, upLicenseNumber, upColour, upDoors, upTransmission, upMileage, upFuelType, upEngineSize, upBodyStyle, upCondition, upNotes);
 			Boolean updated = dao.updateVehicle(updateV, tempUpID);
 			System.out.println("---------------------");
@@ -151,6 +191,7 @@ public class ConsoleController {
 			} else System.out.println("Update failed");
 			break;
 			
+		// Delete a chosen vehicle based on vehicle ID
 		case 5:
 			int tempDelID;
 			System.out.println("Please enter vehicle ID > ");
@@ -162,12 +203,12 @@ public class ConsoleController {
 			}
 			else System.out.println("Delete operation failed");
 			break;
-			
+		// Exit
 		case 6:
 			System.out.println("---------------------");
 			System.out.println("Thank you for using this system, see you!");
 			break;
-			
+		// When user chose a number not in between 1 to 6	
 		default:
 			System.out.println("Please enter number between 1 - 6");
 			
