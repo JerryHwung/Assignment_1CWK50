@@ -15,13 +15,13 @@
 	<h1>Please insert new vehicle's details.</h1>
 	<form method="POST" action="./addVehicle">
 	ID:<input type="number" name="id" required><br>
-	Make:<input type="text" name="make" required><br>
-	Model:<input type="text" name="model" required><br>
-	Year:<input type="number" name="year" required><br>
+	Make:<input type="text" name="make" pattern="[a-zA-Z]+" required><br>
+	Model:<input type="text" name="model" pattern="[a-zA-Z0-9]+" required><br>
+	Year:<input type="number" name="year" min="1" max="9999" required><br>
 	Price:<input type="number" name="price" required><br>
-	License Number:<input type="text" name="license number" required><br>
+	License Number:<input type="text" name="license number" pattern="(^[A-Z]{2}[0-9]{2}[A-Z]{3}$)" placeholder="ex. AB12ABC" required><br>
 	Colour:<input type="text" name="colour" required><br>
-	Number of Doors:<input type="text" name="doors" required><br>
+	Number of Doors:<input type="text" name="doors" pattern="[0-9]+" required><br>
 	Transmission type (manual/automatic):<input type="text" name="transmission" required><br>
 	Mileage:<input type="number" name="mileage" required><br>
 	Fuel type (petrol.diesel,hybrid,electric):<input type="text" name="fuel type" required><br>
