@@ -1,3 +1,7 @@
+/**
+ * This is the user DAO
+ * @author Hong Jin Hwung_17004464
+ */
 package controller;
 
 import java.sql.Connection;

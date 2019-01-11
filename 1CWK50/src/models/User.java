@@ -1,3 +1,7 @@
+/**
+ * This is the user constructor
+ * @author Hong Jin Hwung_17004464
+ */
 package models;
 
 public class User {

@@ -3,17 +3,7 @@ body{
 font-family: arial;
 text-align: center;
 }
-table{
-border-collapse: collapse;
-width: 50%;
-margin: 0 auto;
-}
-table td, table th{
-padding: 5px;
-}
-table tr:nth-child(odd){
-background: #e4e4e4;
-}
+
 h1 {
 text-transform: capitalize;
 }

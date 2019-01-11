@@ -7,30 +7,64 @@
 <meta charset="ISO-8859-1">
 <title>Add New Vehicle</title>
 <link rel="stylesheet" type="text/css" href="css/site.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
-<body>
-<b>${message}</b><br>
+<body class="text-center p-3">
+<!--Show notification -->
+${notification}<br>
+<!-- instantly remove the value of notification after showing -->
+<c:remove var="notification" scope="session"/>
 <c:choose>
 	<c:when test="${sessionScope.user == 'admin'}">
 	<h1>Please insert new vehicle's details.</h1>
 	<form method="POST" action="./addVehicle">
-	ID:<input type="number" name="id" required><br>
-	Make:<input type="text" name="make" pattern="[a-zA-Z]+" required><br>
-	Model:<input type="text" name="model" pattern="[a-zA-Z0-9]+" required><br>
-	Year:<input type="number" name="year" min="1" max="9999" required><br>
-	Price:<input type="number" name="price" required><br>
-	License Number:<input type="text" name="license number" pattern="(^[A-Z]{2}[0-9]{2}[A-Z]{3}$)" placeholder="ex. AB12ABC" required><br>
-	Colour:<input type="text" name="colour" required><br>
-	Number of Doors:<input type="text" name="doors" pattern="[0-9]+" required><br>
-	Transmission type (manual/automatic):<input type="text" name="transmission" required><br>
-	Mileage:<input type="number" name="mileage" required><br>
-	Fuel type (petrol.diesel,hybrid,electric):<input type="text" name="fuel type" required><br>
-	Engine size (cc):<input type="number" name="engine size" required><br>
-	Body style (hatchback, estate, SUV, MVP coupe):<input type="text" name="body style" required><br>
-	Condition (e.g. like new, good, fair):<input type="text" name="condition" required><br>
-	Notes (special features such as sat nav):<input type="text" name="notes" required><br>
-	<input type="submit" value="Create">
-	<a href="./home">Cancel</a>
+	<div class="p-2">
+	ID: <input class="ml-3" type="number" name="id" required>
+	</div>
+	<div class="p-2">
+	Make: <input class="ml-3" type="text" name="make" pattern="[a-zA-Z]+" required>
+	</div>
+	<div class="p-2">
+	Model: <input class="ml-3" type="text" name="model" pattern="[a-zA-Z0-9]+" required>
+	</div>
+	<div class="p-2">
+	Year: <input class="ml-3" type="number" name="year" min="1" max="9999" required>
+	</div>
+	<div class="p-2">
+	Price: <input class="ml-3" type="number" name="price" required>
+	</div>
+	<div class="p-2">
+	License Number: <input class="ml-3" type="text" name="license number" pattern="(^[A-Z]{2}[0-9]{2}[A-Z]{3}$)" placeholder="ex. AB12ABC" required>
+	</div>
+	<div class="p-2">
+	Colour: <input class="ml-3" type="text" name="colour" required>
+	</div>
+	<div class="p-2">
+	Number of Doors: <input class="ml-3" type="text" name="doors" pattern="[0-9]+" required>
+	</div>
+	<div class="p-2">
+	Transmission type (manual/automatic): <input class="ml-3" type="text" name="transmission" required>
+	</div>
+	<div class="p-2">
+	Mileage: <input class="ml-3" type="number" name="mileage" required>
+	</div>
+	<div class="p-2">
+	Fuel type (petrol.diesel,hybrid,electric): <input class="ml-3" type="text" name="fuel type" required>
+	</div>
+	<div class="p-2">
+	Engine size (cc): <input class="ml-3" type="number" name="engine size" required>
+	</div>
+	<div class="p-2">
+	Body style (hatchback, estate, SUV, MVP coupe): <input class="ml-3" type="text" name="body style" required>
+	</div>
+	<div class="p-2">
+	Condition (e.g. like new, good, fair): <input class="ml-3" type="text" name="condition" required>
+	</div>
+	<div class="p-2">
+	Notes (special features such as sat nav): <input class="ml-3" type="text" name="notes" required>
+	</div>
+	<input class="btn btn-success" type="submit" value="Create">
+	<a class="btn btn-secondary ml-2" href="./home">Cancel</a>
 	</form>
 	</c:when>
 	<c:when test="${sessionScope.user == null}">

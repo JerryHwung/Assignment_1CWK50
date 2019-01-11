@@ -2,16 +2,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Login Page(Tester)</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<title>Welcome</title>
 </head>
 <body>
-<h1>Login</h1>
-<h2>Admin Login Vehicle Inventory.</h2>
-<form method="POST">
-Username: <input type="text" name="username"> <br>
-Password: <input type="password" name="password"> <br>
-<input type="submit" value="Login">
-</form>
-<a href="./login">go to login page</a>
+<div class="container">
+<h1 class="text-center">Welcome to the Vehicle Inventory System</h1>
+<h2>Instructions</h2>
+<ol>
+<li>Please go to the login page and sign in as an admin first. The username is <b>admin</b> and password is <b>kings123</b>.</li>
+<li>In the home page you will see a table with vehicles' details. Only admin is allowed to manipulate the table.</li>
+<li>Be careful the delete buttons, the delete operation is executed immediately.</li>
+</ol>
+<a href="./login">Go to login page</a>
+</div>
 </body>
 </html>

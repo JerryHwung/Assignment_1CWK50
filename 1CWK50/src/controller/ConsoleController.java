@@ -42,7 +42,7 @@ public class ConsoleController {
 		System.out.println("3 - Insert new vehicle into database");
 		System.out.println("4 - Update existing vehicle details");
 		System.out.println("5 - Delete vehicle from database");
-		System.out.println("6 - Hash password and update into the database");
+		System.out.println("6 - Hash password and update into the database(do not use this because password already hashed once)");
 		System.out.println("7 - Exit");
 		System.out.println("Enter choice > ");
 		choice = input.nextInt();

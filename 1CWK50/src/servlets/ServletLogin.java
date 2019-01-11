@@ -74,7 +74,8 @@ public class ServletLogin extends HttpServlet{
 		else {
 			// user will get redirect to login page to try again
 			RequestDispatcher view = req.getRequestDispatcher("jsp/login.jsp");
-			req.setAttribute("failLogin", "Please try again.");
+			HttpSession session = req.getSession();
+			session.setAttribute("notification", "Invalid username or password, please try again.");
 			view.forward(req, resp);
 		}
 	}

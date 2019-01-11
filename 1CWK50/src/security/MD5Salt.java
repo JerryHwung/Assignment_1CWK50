@@ -1,3 +1,7 @@
+/**
+ * This page contains method for hashing password with MD5 and salt
+ * @author Hong Jin Hwung_17004464
+ */
 package security;
 
 import java.security.MessageDigest;
