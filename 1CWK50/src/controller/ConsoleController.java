@@ -4,26 +4,31 @@
  */
 package controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import models.Vehicle;
+import security.MD5Salt;
 
 public class ConsoleController {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 		/**
 		 * Menu displayed for user to choose which CRUD method to execute
 		 * The menu will print out again once the chosen method completed
 		 * By selecting exit, the menu will stop the loop
 		 */
 		VehicleDAO dao = new VehicleDAO();
+		UserDAO dao2 = new UserDAO();
+		MD5Salt hash = new MD5Salt();
 		/**
 		 * @param choice = the option that user chose
 		 */
 		int choice=0;
-		while(choice!=6) {
+		while(choice!=7) {
 		/**
 		 * @param input = a scanner
 		 */
@@ -37,7 +42,8 @@ public class ConsoleController {
 		System.out.println("3 - Insert new vehicle into database");
 		System.out.println("4 - Update existing vehicle details");
 		System.out.println("5 - Delete vehicle from database");
-		System.out.println("6 - Exit");
+		System.out.println("6 - Hash password and update into the database");
+		System.out.println("7 - Exit");
 		System.out.println("Enter choice > ");
 		choice = input.nextInt();
 		switch(choice){
@@ -203,8 +209,34 @@ public class ConsoleController {
 			}
 			else System.out.println("Delete operation failed");
 			break;
-		// Exit
+		// Hash and update password
 		case 6:
+			// declare variables
+			String tempUname, tempPword;
+			byte[] tempSalt;
+			// ask user to enter username
+			System.out.println("Please enter username > ");
+			input.nextLine();
+			tempUname = input.nextLine();
+			// Generate salt
+			tempSalt = MD5Salt.getSalt();
+			// Retrieve password from Database
+			tempPword = dao2.getPassword(tempUname);
+			System.out.println("insecure pword "+tempPword);
+			// hash password
+			String hashedPword = MD5Salt.hashIt(tempPword,tempSalt);
+			System.out.println("secure pword "+hashedPword);
+			// update salt and password
+			Boolean updatedP = dao2.updatePassword(hashedPword, tempSalt, tempUname);
+			System.out.println("---------------------");
+			if (updatedP = true){
+				System.out.println("Update operation successfully done");
+			}
+			else System.out.println("Update operation failed");
+			break;
+		// Exit
+		case 7:
+			// print out exit message
 			System.out.println("---------------------");
 			System.out.println("Thank you for using this system, see you!");
 			break;

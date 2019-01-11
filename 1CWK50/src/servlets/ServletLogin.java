@@ -20,61 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controller.UserDAO;
 import security.MD5Salt;
 
 public class ServletLogin extends HttpServlet{
 	// set up a universal version identifier
 	private static final long serialVersionUID = 1L;
-	// set up a connection to database
-	private Connection getDBConnection(){
-		Connection conn = null;
-		try{
-			// name of the database
-			Class.forName("org.sqlite.JDBC");
-		} catch(ClassNotFoundException e){
-			System.out.println(e.getMessage());
-		}
-		
-		try{
-			// type of the database file
-			String url = "jdbc:sqlite:vehicles.sqlite";
-			conn = DriverManager.getConnection(url);
-		}catch(SQLException e){
-			System.out.println(e.getMessage());
-		}
-		return conn;
-	}
-	// method for matching username to get password
-	public String checkForMatch(String uname, byte[] s ) throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
-		// declare variables
-		Connection dbConnection = null;
-		PreparedStatement preparedStatement= null;
-		ResultSet result = null;
-		String pword_db = null;
-		// query to retrieve details related to the signed in user
-		String query = "SELECT password FROM users WHERE username = ?";
-		try{
-			// connect to database
-			dbConnection = getDBConnection();
-			// create a prepared statement
-			preparedStatement = dbConnection.prepareStatement(query);
-			// set a variable for the questionmark
-			preparedStatement.setString(1, uname);
-			System.out.println("DBQuery = "+query);
-			result = preparedStatement.executeQuery();
-			while(result.next()){
-				pword_db = result.getString("password");
-			}
-		} finally{
-			// close connection
-			if (result != null){result.close();}
-			if (preparedStatement != null){preparedStatement.close();}
-			if (dbConnection != null){dbConnection.close();}
-		}
-		// hash the password with a method in MD5Salt
-		String securePword_db = MD5Salt.hashIt(pword_db, s);
-		return securePword_db;
-	}
+	UserDAO dao = new UserDAO();
+	MD5Salt hash = new MD5Salt();
 	@Override
 	// get request
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{		
@@ -89,32 +42,23 @@ public class ServletLogin extends HttpServlet{
 	// post request
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		// declare variables
+		
 		String username = (String) req.getParameter("username");
 		String password = (String) req.getParameter("password");
-		String securePword = null;
+		String inPword = null;
 		String pwordForVerify = null;
 		byte[] salt = null;
-		// Generate a salt value for hashing
+		// retrieve password and salt based on username
 		try {
-			salt = MD5Salt.getSalt();
-		} catch (NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
-		} catch (NoSuchProviderException e1) {
-			e1.printStackTrace();
+			pwordForVerify = dao.getPassword(username);
+			salt = dao.getSalt(username);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		// find a matching username in the database and get the hashed password
-			try {
-				pwordForVerify = checkForMatch(username, salt);
-				securePword = MD5Salt.hashIt(password,salt);
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchProviderException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
+		// hash the password submit by user
+		inPword = MD5Salt.hashIt(password,salt);
 		// if password matches
-		if( securePword.equals(pwordForVerify) ) {
+		if( inPword.equals(pwordForVerify) ) {
 			HttpSession session = req.getSession();
 			//set up a session
 			session.setAttribute("user","admin");
