@@ -211,6 +211,8 @@ public class ConsoleController {
 			break;
 		// Hash and update password
 		case 6:
+			System.out.println("Oops, someone's being naughty or just an accident?");
+			/*
 			// declare variables
 			String tempUname, tempPword;
 			byte[] tempSalt;
@@ -233,6 +235,7 @@ public class ConsoleController {
 				System.out.println("Update operation successfully done");
 			}
 			else System.out.println("Update operation failed");
+			*/
 			break;
 		// Exit
 		case 7:
@@ -243,7 +246,6 @@ public class ConsoleController {
 		// When user chose a number not in between 1 to 6	
 		default:
 			System.out.println("Please enter number between 1 - 6");
-			
 			break;
 		}}
 	}
